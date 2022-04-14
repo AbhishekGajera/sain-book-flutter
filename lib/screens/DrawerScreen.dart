@@ -23,17 +23,19 @@ class CustomDrawer extends StatelessWidget {
                 color: Colors.black,
                 child: Column(
                   children: [
-                    Obx(() {
-                      return Center(
-                        child: CircleAvatar(
-                          radius: 60, // Image radius
-                          // backgroundImage: AssetImage(sainbooktransparent),
-                          backgroundImage: NetworkImage(getImageBaseUrl(
+                    Obx(
+                      () {
+                        return Image(
+                          image: NetworkImage(
+                            getImageBaseUrl(
                               endpoint: controller.loginData.value.data!.image
-                                  .toString())),
-                        ),
-                      ).marginOnly(top: 30);
-                    }),
+                                  .toString(),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    //
                     Obx(() {
                       return Center(
                         child: Text(
