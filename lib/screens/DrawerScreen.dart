@@ -179,11 +179,15 @@ class CustomDrawer extends StatelessWidget {
                   title: Text("Courier", style: Themes.drawerTexeStyle),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    controller.selectedPage.value = 4;
+                  },
                   title: Text("Website", style: Themes.drawerTexeStyle),
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    controller.selectedPage.value = 3;
+                  },
                   title: Text("Customer", style: Themes.drawerTexeStyle),
                 ),
                 ListTile(

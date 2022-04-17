@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:sain_book_project/network/DioServices.dart';
 
 import 'add_courier_state.dart';
 
@@ -21,8 +22,15 @@ class AddCourierLogic extends GetxController {
     'Disable',
   ];
 
-  void performLoginClick(BuildContext context) {
+  DioService dio = DioService();
 
+  void performLoginClick(BuildContext context) {
+    // dio.AddCurier(
+    //         courier_name: courier_name,
+    //         courier_website: courier_website,
+    //         cod: cod,
+    //         rate: rate,
+    //         courier_status: courier_status)
+    //     .then((value) {});
   }
-  
 }

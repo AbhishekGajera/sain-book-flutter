@@ -11,7 +11,8 @@ class UserSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context =context;
-    return Column(
+    controller.initContext(context);
+    return ListView(
       children: [
         emailField(),
         userTypeField(),
@@ -84,7 +85,7 @@ class UserSearchPage extends StatelessWidget {
           icon: Icon(Icons.date_range, color: Colors.redAccent.shade700),
           onPressed: () {
             print("clicked");
-            selectDate(context);
+            loginFromData(context);
           },
         ),
       ],
@@ -104,7 +105,7 @@ class UserSearchPage extends StatelessWidget {
           height: 50,
           child: TextField(
             scrollPadding: EdgeInsets.only(bottom: 40),
-            controller: controller.loginfromdate,
+            controller: controller.logintodate,
             cursorColor: Colors.black,
             style: TextStyle(color: Colors.black),
             decoration: Themes.textFieldDecoration2(hint: "Login To Date"),
@@ -114,7 +115,7 @@ class UserSearchPage extends StatelessWidget {
           icon: Icon(Icons.date_range, color: Colors.redAccent.shade700),
           onPressed: () {
             print("clicked");
-            selectDate(context);
+            loginToDatePicker(context);
           },
         ),
       ],
@@ -175,15 +176,29 @@ class UserSearchPage extends StatelessWidget {
 
 
 
-  DateTime selectedDate = DateTime.now();
-  Future<void> selectDate(BuildContext context) async {
+
+  Future<void> loginFromData(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: controller.selectedLoginFromDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
+    if (picked != null && picked != controller.selectedLoginFromDate) {
+      controller.loginFromDateSet(picked);
     }
   }
+
+  Future<void> loginToDatePicker(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: controller.selectedLoginToDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      controller.logintoDateset(picked);
+
+    }
+  }
+
+
 }

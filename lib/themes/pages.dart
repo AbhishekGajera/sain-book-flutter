@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:sain_book_project/screens/customer/customer_view.dart';
 import 'package:sain_book_project/screens/login/login_view.dart';
 import 'package:sain_book_project/screens/user/user_view.dart';
 import 'package:sain_book_project/themes/routes.dart';
@@ -6,6 +7,8 @@ import '../screens/company/company_view.dart';
 import '../screens/courier/courier_view.dart';
 import '../screens/home/home_view.dart';
 import '../screens/splash/splash_screen.dart';
+import '../screens/user/user_list/user_list_view.dart';
+import '../screens/website/website_view.dart';
 
 appRoutes() {
   return [
@@ -46,5 +49,24 @@ appRoutes() {
       transition: Transition.leftToRightWithFade,
       transitionDuration: Duration(milliseconds: 500),
     ),
+    GetPage(
+      name: customer,
+      page: () => CustomerPage(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: website,
+      page: () => WebsitePage(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+    GetPage(
+      name: userlist,
+      page: () => UserListPage(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: Duration(milliseconds: 500),
+    ),
+
   ];
 }

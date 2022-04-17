@@ -1,7 +1,4 @@
 import 'dart:convert';
-/// flag : 1
-/// msg : "successfully website add."
-/// data : {"website_name":"test","website_url":"testttt","website_status":"1","modify_date":"2022-04-16 17:16:16","reg_date":"2022-04-16 17:16:16"}
 
 SaveWebsiteModel saveWebsiteModelFromJson(String str) => SaveWebsiteModel.fromJson(json.decode(str));
 String saveWebsiteModelToJson(SaveWebsiteModel data) => json.encode(data.toJson());
@@ -40,11 +37,6 @@ class SaveWebsiteModel {
 
 }
 
-/// website_name : "test"
-/// website_url : "testttt"
-/// website_status : "1"
-/// modify_date : "2022-04-16 17:16:16"
-/// reg_date : "2022-04-16 17:16:16"
 
 Data dataFromJson(String str) => Data.fromJson(json.decode(str));
 String dataToJson(Data data) => json.encode(data.toJson());

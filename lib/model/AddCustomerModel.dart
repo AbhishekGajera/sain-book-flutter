@@ -1,7 +1,4 @@
 import 'dart:convert';
-/// flag : 1
-/// msg : "Customer saved successfully!"
-/// data : {"customer_name":"sas","customer_email":"asas","customer_mobile":"9978848357","customer_mobile1":"9978848357","customer_address":"sasas, asas","agency_name":"asas","agency_mobile":"8866779008","term_id":"1","customer_status":"1"}
 
 AddCustomerModel addCustomerModelFromJson(String str) => AddCustomerModel.fromJson(json.decode(str));
 String addCustomerModelToJson(AddCustomerModel data) => json.encode(data.toJson());

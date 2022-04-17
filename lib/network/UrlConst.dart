@@ -17,4 +17,11 @@ class endPoint {
   static String saveuser = "saveuser";
   static String savecourier = "savecourier";
   static String savecompany = "savecompany";
+  static String savecustomer = "savecustomer";
+  static String savewebsite = "savewebsite";
+  static String userlist = "userlist";
+  static String customerlist = "customerlist";
+  static String websitelist = "websitelist";
+  static String courierlist = "courierlist";
+  static String companylist = "companylist";
 }

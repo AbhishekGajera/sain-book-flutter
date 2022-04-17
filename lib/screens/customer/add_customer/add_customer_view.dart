@@ -2,33 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../themes/mythemes.dart';
-import 'add_courier_logic.dart';
+import 'add_customer_logic.dart';
 
-class AddCourierPage extends StatelessWidget {
-  final controller = Get.put(AddCourierLogic());
-  final state = Get.find<AddCourierLogic>().state;
+class Add_customerPage extends StatelessWidget {
+  final controller = Get.put(Add_customerLogic());
+  final state = Get.find<Add_customerLogic>().state;
 
   late BuildContext context;
   @override
   Widget build(BuildContext context) {
-    this.context = context;
-    return Column(
+    this.context=context;
+    return ListView(
       children: [
-        courierName(),
-        courierWebsites(),
-        codStatus(),
-        rate(),
+        customerName(),
+        customerEmail(),
+        customerMobile(),
+        customerMobile1(),
+        customerAddress(),
+        agencyName(),
+        agencyMobile(),
+        term(),
         status(),
         commenButton()
+
       ],
     );
   }
 
-  courierName() {
+  customerName() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
-      decoration: Themes.textFieldDecoration(hint: "Courier Name"),
+      controller: controller.customerName,
+      decoration: Themes.textFieldDecoration(hint: "Customer Name"),
     ).marginOnly(
       left: 20,
       top: 10,
@@ -37,11 +42,11 @@ class AddCourierPage extends StatelessWidget {
     );
   }
 
-  courierWebsites() {
+  customerEmail() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
-      decoration: Themes.textFieldDecoration(hint: "Courier Website"),
+      controller: controller.customerEmail,
+      decoration: Themes.textFieldDecoration(hint: "Customer Email"),
     ).marginOnly(
       left: 20,
       top: 10,
@@ -50,11 +55,63 @@ class AddCourierPage extends StatelessWidget {
     );
   }
 
-  rate() {
+  customerMobile() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
-      decoration: Themes.textFieldDecoration(hint: "Rate"),
+      controller: controller.customerMobile,
+      decoration: Themes.textFieldDecoration(hint: "Customer Mobile"),
+    ).marginOnly(
+      left: 20,
+      top: 10,
+      right: 20,
+      bottom: 10,
+    );
+  }
+
+  customerMobile1() {
+    return TextField(
+      style: Themes.textFieldTextStyle,
+      controller: controller.customerMobile1,
+      decoration: Themes.textFieldDecoration(hint: "Customer Mobile1"),
+    ).marginOnly(
+      left: 20,
+      top: 10,
+      right: 20,
+      bottom: 10,
+    );
+  }
+
+  customerAddress() {
+    return TextField(
+      style: Themes.textFieldTextStyle,
+      controller: controller.customerAddress,
+      decoration: Themes.textFieldDecoration(hint: "Customer Address"),
+    ).marginOnly(
+      left: 20,
+      top: 10,
+      right: 20,
+      bottom: 10,
+    );
+  }
+
+  agencyName() {
+    return TextField(
+      style: Themes.textFieldTextStyle,
+      controller: controller.agencyName,
+      decoration: Themes.textFieldDecoration(hint: "Agency Name"),
+    ).marginOnly(
+      left: 20,
+      top: 10,
+      right: 20,
+      bottom: 10,
+    );
+  }
+
+  agencyMobile() {
+    return TextField(
+      style: Themes.textFieldTextStyle,
+      controller: controller.agencyMobile,
+      decoration: Themes.textFieldDecoration(hint: "Agency Mobile"),
     ).marginOnly(
       left: 20,
       top: 10,
@@ -64,35 +121,6 @@ class AddCourierPage extends StatelessWidget {
   }
 
 
-  codStatus() {
-    return Obx(() {
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: DropdownButton(
-            isExpanded: true,
-            underline: Container(),
-            iconSize: 24,
-            elevation: 16,
-            value: controller.code_value.value,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: (newValue) {
-              controller.code_value.value = newValue.toString();
-            },
-            items: controller.codStatus.map((value) {
-              return DropdownMenuItem(
-                value: value.toString(),
-                child: Container(
-                  child: Text(value.toString()),
-                ),
-              );
-            }).toList())
-            .marginOnly(left: 10, right: 10),
-      ).marginOnly(left: 20, right: 20, top: 10);
-    });
-  }
 
   status() {
     return Obx(() {
@@ -109,9 +137,39 @@ class AddCourierPage extends StatelessWidget {
             value: controller.statusValue.value,
             icon: const Icon(Icons.keyboard_arrow_down),
             onChanged: (newValue) {
-              controller.statusValue.value = newValue.toString();
+              controller.setNewValue(newValue.toString());
             },
-            items: controller.status.map((value) {
+            items: controller.statusList.map((value) {
+              return DropdownMenuItem(
+                value: value.toString(),
+                child: Container(
+                  child: Text(value.toString()),
+                ),
+              );
+            }).toList())
+            .marginOnly(left: 10, right: 10),
+      ).marginOnly(left: 20, right: 20, top: 10);
+    });
+  }
+
+  term() {
+    return Obx(() {
+      return Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: DropdownButton(
+            isExpanded: true,
+            underline: Container(),
+            iconSize: 24,
+            elevation: 16,
+            value: controller.termsValue.value,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            onChanged: (newValue) {
+              controller.setNewValue(newValue.toString());
+            },
+            items: controller.termList.map((value) {
               return DropdownMenuItem(
                 value: value.toString(),
                 child: Container(
@@ -136,10 +194,11 @@ class AddCourierPage extends StatelessWidget {
           controller.performLoginClick(context);
         },
         child: const Text(
-          "Save",
+          "Search",
           style: TextStyle(fontSize: 16),
         ),
       ),
     ).marginOnly(left: 20, right: 20, top: 10, bottom: 20);
   }
+
 }

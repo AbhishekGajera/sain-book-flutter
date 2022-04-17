@@ -9,6 +9,18 @@ class UserListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+      ),
+      body: ListView.builder(
+        itemCount: 5,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text("hello"),
+          );
+        },
+      ),
+    );
   }
 }
