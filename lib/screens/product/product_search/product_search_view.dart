@@ -1,6 +1,9 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sain_book_project/screens/DrawerScreen.dart';
 
+import '../../../model/CompanyListModel.dart';
 import '../../../themes/mythemes.dart';
 import 'product_search_logic.dart';
 
@@ -8,22 +11,29 @@ class Product_searchPage extends StatelessWidget {
   final controller = Get.put(Product_searchLogic());
   final state = Get.find<Product_searchLogic>().state;
   late BuildContext context;
+
   @override
   Widget build(BuildContext context) {
+    controller.getCompanyList(context);
     this.context = context;
-    return ListView(
-      children: [
-        productsku(),
-        location(),
-        targetPrice(),
-        Quantity(),
-        FormDate(context),
-        ToDate(context),
-        productstatusSelection(),
-        companySelection(),
-        searchButton(),
-        resetButton(),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+      ),
+      drawer: CustomDrawer(),
+      body: ListView(
+        children: [
+          productsku(),
+          location(),
+          targetPrice(),
+          Quantity(),
+          FormDate(context),
+          ToDate(context),
+          productstatusSelection(),
+          companySelection(),
+          searchButton(),
+        ],
+      ),
     );
   }
 
@@ -71,7 +81,7 @@ class Product_searchPage extends StatelessWidget {
           icon: Icon(Icons.date_range, color: Colors.redAccent.shade700),
           onPressed: () {
             print("clicked");
-            selectDate(context);
+            selectDate(context,"From Date");
           },
         ),
       ],
@@ -101,7 +111,7 @@ class Product_searchPage extends StatelessWidget {
           icon: Icon(Icons.date_range, color: Colors.redAccent.shade700),
           onPressed: () {
             print("clicked");
-            selectDate(context);
+            selectDate(context,"To Date");
           },
         ),
       ],
@@ -111,46 +121,41 @@ class Product_searchPage extends StatelessWidget {
     );
   }
 
-  DateTime selectedDate = DateTime.now();
-  Future<void> selectDate(BuildContext context) async {
+  DateTime currentDate = DateTime.now();
+  Future<void> selectDate(BuildContext context, String flag) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: currentDate,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
+    if (picked != null) {
+      if(flag == "To Date"){
+        controller.changeToDate(picked);
+      }else{
+        controller.chageFromDate(picked);
+      }
     }
   }
 
   companySelection() {
-    return Obx(() {
-      return Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: DropdownButton(
-                isExpanded: true,
-                underline: Container(),
-                iconSize: 24,
-                elevation: 16,
-                value: controller.companyValue.value,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                onChanged: (newValue) {
-                  controller.setcompanyType(newValue.toString());
-                },
-                items: controller.companyList.map((value) {
-                  return DropdownMenuItem(
-                    value: value.toString(),
-                    child: Container(
-                      child: Text(value.toString()),
-                    ),
-                  );
-                }).toList())
-            .marginOnly(left: 10, right: 10),
-      ).marginOnly(left: 20, right: 20, top: 10);
-    });
+      return Obx(() {
+        return DropdownSearch<Data>(
+          mode: Mode.MENU,
+          items: controller.companylist.value.data,
+          itemAsString: (Data? data) => data!.companyName.toString(),
+          dropdownSearchDecoration:
+          Themes.textFieldDecoration(hint: "Customer"),
+          onChanged: (Data? value) {
+            controller.selectedCompanyValue(value!);
+          },
+          showSearchBox: true,
+        ).marginOnly(
+          left: 20,
+          top: 10,
+          right: 20,
+          bottom: 10,
+        );
+      });
   }
 
   targetPrice() {
@@ -272,22 +277,4 @@ class Product_searchPage extends StatelessWidget {
     ).marginOnly(left: 20, right: 20, top: 10, bottom: 10);
   }
 
-  resetButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 45,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.redAccent.shade700,
-        ),
-        onPressed: () {
-          controller.performLoginClickreset(context);
-        },
-        child: const Text(
-          "Reset",
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
-    ).marginOnly(left: 20, right: 20, top: 5, bottom: 20);
-  }
 }

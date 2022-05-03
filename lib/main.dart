@@ -20,6 +20,4 @@ class MyApp extends StatelessWidget {
       getPages: appRoutes(),
     );
   }
-
-
 }

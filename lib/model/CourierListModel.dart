@@ -54,8 +54,8 @@ class CourierListModel {
 /// modify_date : "2016-08-03 00:00:00"
 /// courier_status : "1"
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
+Data courierdataFromJson(String str) => Data.fromJson(json.decode(str));
+String courierdataToJson(Data data) => json.encode(data.toJson());
 class Data {
   Data({
       String? courierId, 

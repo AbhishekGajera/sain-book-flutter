@@ -55,10 +55,10 @@ class DioService {
     required String company_id,
     required String default_status,
     required String user_status,
-    required File image,
+    required String image,
     required String user_id,
   }) async {
-    String fileName = image.path.split('/').last;
+    String fileName = image.split('/').last;
     try {
       var formData = FormData.fromMap({
         'firstname': firstname,
@@ -72,7 +72,7 @@ class DioService {
         'company_id': company_id,
         'default_status': default_status,
         'user_status': user_status,
-        'image': await MultipartFile.fromFile(image.path, filename: fileName),
+        if(image.isNotEmpty)'image': await MultipartFile.fromFile(File(image).path, filename: fileName),
         'user_id': user_id,
       });
       Response response = await dio.post(getUrl(endpoint: endPoint.saveuser),
@@ -84,7 +84,8 @@ class DioService {
       return model;
     } on DioError catch (e) {
       print(e);
-      return null;
+      return Future.error("error");
+
     }
   }
 
@@ -118,7 +119,7 @@ class DioService {
       return model;
     } on DioError catch (e) {
       print(e);
-      return null;
+      return Future.error("error");
     }
   }
 
@@ -300,7 +301,7 @@ class DioService {
     }
   }
 
-  Future<CourierListModel?> courierListModel({
+  Future<CourierListModel?> getCourierList({
     required String id,
     required String courier_name,
     required String cod,

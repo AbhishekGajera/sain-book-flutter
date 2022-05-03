@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sain_book_project/themes/routes.dart';
 
 import '../../other/images.dart';
+import '../../themes/SassionManager.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,7 +16,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 7), () => Get.toNamed(login));
+    SassionManager.getBoolean(key: SassionConst.islogin).then((value){
+      if(value==true){
+        Timer(Duration(seconds: 4), () => Get.toNamed(home));
+      }else{
+        Timer(Duration(seconds: 4), () => Get.toNamed(login));
+      }
+    });
   }
 
   @override

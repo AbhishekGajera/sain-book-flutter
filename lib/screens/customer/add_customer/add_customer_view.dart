@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sain_book_project/model/CustomerListModel.dart';
 
 import '../../../themes/mythemes.dart';
 import 'add_customer_logic.dart';
@@ -9,9 +10,37 @@ class Add_customerPage extends StatelessWidget {
   final state = Get.find<Add_customerLogic>().state;
 
   late BuildContext context;
+
+  Add_customerPage({CustomerData? customer}) {
+    if (customer!= null) {
+      controller.customerName.text = customer.customerName ?? "";
+      controller.customerEmail.text = customer.customerEmail ?? "";
+      controller.customerMobile.text = customer.customerMobile ?? "";
+      controller.customerMobile1.text = customer.customerMobile1 ?? "";
+      controller.customerAddress.text = customer.customerAddress ?? "";
+      controller.agencyName.text = customer.agencyName??"";
+      controller.agencyMobile.text = customer.agencyMobile??"";
+      controller.termsValue.value = controller.termList[int.parse(customer.termId.toString())+1];
+      controller.termId = int.parse(customer.termId.toString());
+      controller.customer_status_id = int.parse(customer.customerStatus.toString());
+    } else {
+      controller.customerName.text = "";
+      controller.customerEmail.text = "";
+      controller.customerMobile.text = "";
+      controller.customerMobile1.text = "";
+      controller.customerAddress.text = "";
+      controller.agencyName.text = "";
+      controller.agencyMobile.text = "";
+      controller.termId = -1;
+      controller.customer_status_id = -1;
+      controller.termsValue.value = "Select Terms";
+      controller.statusValue.value = "Select Status";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    this.context=context;
+    this.context = context;
     return ListView(
       children: [
         customerName(),
@@ -24,7 +53,6 @@ class Add_customerPage extends StatelessWidget {
         term(),
         status(),
         commenButton()
-
       ],
     );
   }
@@ -120,8 +148,6 @@ class Add_customerPage extends StatelessWidget {
     );
   }
 
-
-
   status() {
     return Obx(() {
       return Container(
@@ -130,23 +156,23 @@ class Add_customerPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: DropdownButton(
-            isExpanded: true,
-            underline: Container(),
-            iconSize: 24,
-            elevation: 16,
-            value: controller.statusValue.value,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: (newValue) {
-              controller.setNewValue(newValue.toString());
-            },
-            items: controller.statusList.map((value) {
-              return DropdownMenuItem(
-                value: value.toString(),
-                child: Container(
-                  child: Text(value.toString()),
-                ),
-              );
-            }).toList())
+                isExpanded: true,
+                underline: Container(),
+                iconSize: 24,
+                elevation: 16,
+                value: controller.statusValue.value,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                onChanged: (newValue) {
+                  controller.setStatusValue(newValue.toString());
+                },
+                items: controller.statusList.map((value) {
+                  return DropdownMenuItem(
+                    value: value.toString(),
+                    child: Container(
+                      child: Text(value.toString()),
+                    ),
+                  );
+                }).toList())
             .marginOnly(left: 10, right: 10),
       ).marginOnly(left: 20, right: 20, top: 10);
     });
@@ -160,23 +186,23 @@ class Add_customerPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
         ),
         child: DropdownButton(
-            isExpanded: true,
-            underline: Container(),
-            iconSize: 24,
-            elevation: 16,
-            value: controller.termsValue.value,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: (newValue) {
-              controller.setNewValue(newValue.toString());
-            },
-            items: controller.termList.map((value) {
-              return DropdownMenuItem(
-                value: value.toString(),
-                child: Container(
-                  child: Text(value.toString()),
-                ),
-              );
-            }).toList())
+                isExpanded: true,
+                underline: Container(),
+                iconSize: 24,
+                elevation: 16,
+                value: controller.termsValue.value,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                onChanged: (newValue) {
+                  controller.settermValue(newValue.toString());
+                },
+                items: controller.termList.map((value) {
+                  return DropdownMenuItem(
+                    value: value.toString(),
+                    child: Container(
+                      child: Text(value.toString()),
+                    ),
+                  );
+                }).toList())
             .marginOnly(left: 10, right: 10),
       ).marginOnly(left: 20, right: 20, top: 10);
     });
@@ -191,14 +217,13 @@ class Add_customerPage extends StatelessWidget {
           primary: Colors.redAccent.shade700,
         ),
         onPressed: () {
-          controller.performLoginClick(context);
+          controller.performAddCostomer(context);
         },
         child: const Text(
-          "Search",
+          "Save",
           style: TextStyle(fontSize: 16),
         ),
       ),
     ).marginOnly(left: 20, right: 20, top: 10, bottom: 20);
   }
-
 }

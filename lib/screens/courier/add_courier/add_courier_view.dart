@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sain_book_project/model/CourierListModel.dart';
 
 import '../../../themes/mythemes.dart';
 import 'add_courier_logic.dart';
@@ -9,10 +10,31 @@ class AddCourierPage extends StatelessWidget {
   final state = Get.find<AddCourierLogic>().state;
 
   late BuildContext context;
+
+  AddCourierPage({Data? courier}){
+    if(courier!=null){
+      controller.couriername.text = courier.courierName!;
+      controller.courierWebsite.text =courier.courierWebsite!;
+      controller.rate.text = courier.rate!;
+      controller.codid = int.parse(courier.cod.toString());
+      controller.courierstatusid = int.parse(courier.courierStatus.toString());
+      controller.statusValue.value = courier.courierStatus.toString()=="1"?"Enable":"Disable";
+      controller.code_value.value = courier.cod.toString()=="1"?"Yes":"No";
+    }else{
+      controller.couriername.text ="";
+      controller.courierWebsite.text = "";
+      controller.rate.text = "";
+      controller.codid = -1;
+      controller.courierstatusid = -1;
+      controller.statusValue.value = "Select Status";
+      controller.code_value.value = "Select COD Status";
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return Column(
+    return ListView(
       children: [
         courierName(),
         courierWebsites(),
@@ -40,7 +62,7 @@ class AddCourierPage extends StatelessWidget {
   courierWebsites() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
+      controller: controller.courierWebsite,
       decoration: Themes.textFieldDecoration(hint: "Courier Website"),
     ).marginOnly(
       left: 20,
@@ -53,7 +75,7 @@ class AddCourierPage extends StatelessWidget {
   rate() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
+      controller: controller.rate,
       decoration: Themes.textFieldDecoration(hint: "Rate"),
     ).marginOnly(
       left: 20,
@@ -79,7 +101,7 @@ class AddCourierPage extends StatelessWidget {
             value: controller.code_value.value,
             icon: const Icon(Icons.keyboard_arrow_down),
             onChanged: (newValue) {
-              controller.code_value.value = newValue.toString();
+              controller.setCodStatus(newValue.toString());
             },
             items: controller.codStatus.map((value) {
               return DropdownMenuItem(
@@ -109,7 +131,8 @@ class AddCourierPage extends StatelessWidget {
             value: controller.statusValue.value,
             icon: const Icon(Icons.keyboard_arrow_down),
             onChanged: (newValue) {
-              controller.statusValue.value = newValue.toString();
+              controller.courierStatus(newValue.toString());
+
             },
             items: controller.status.map((value) {
               return DropdownMenuItem(
@@ -133,7 +156,7 @@ class AddCourierPage extends StatelessWidget {
           primary: Colors.redAccent.shade700,
         ),
         onPressed: () {
-          controller.performLoginClick(context);
+          controller.performAddCurier(context);
         },
         child: const Text(
           "Save",

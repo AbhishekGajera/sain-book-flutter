@@ -140,7 +140,7 @@ class UserSearchPage extends StatelessWidget {
                 value: controller.statuDropdownValue.value,
                 icon: const Icon(Icons.keyboard_arrow_down),
                 onChanged: (newValue) {
-                  controller.statuDropdownValue.value = newValue.toString();
+                  controller.setStatusValue(newValue.toString());
                 },
                 items: controller.userstatus.map((value) {
                   return DropdownMenuItem(

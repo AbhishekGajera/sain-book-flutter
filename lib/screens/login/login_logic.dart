@@ -12,8 +12,8 @@ class LoginLogic extends GetxController {
   final LoginState state = LoginState();
   DioService dio = DioService();
   TextEditingController username = TextEditingController()
-    ..text = "helix.dhara@gmail.com";
-  TextEditingController password = TextEditingController()..text = "123456";
+    ..text = "";
+  TextEditingController password = TextEditingController()..text = "";
 
   void performLoginClick(BuildContext context) async {
     LoadingDialog(context).startLoading();
@@ -22,7 +22,9 @@ class LoginLogic extends GetxController {
         LoadingDialog(context).stopLoading();
         SassionManager.saveBoolean(key: SassionConst.islogin, value: true).then((value) {
           SassionManager.saveString(key: SassionConst.loginUserData, value: loginToJson(it)).then((value) {
-            Get.toNamed(home);
+            SassionManager.saveString(key: SassionConst.userid, value: it.data!.userId.toString()).then((value){
+              Get.toNamed(home);
+            });
           });
         });
       } else {
@@ -30,4 +32,5 @@ class LoginLogic extends GetxController {
       }
     });
   }
+
 }

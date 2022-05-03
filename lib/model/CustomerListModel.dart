@@ -6,7 +6,7 @@ class CustomerListModel {
   CustomerListModel({
       int? flag, 
       String? msg, 
-      List<Data>? data,}){
+      List<CustomerData>? data,}){
     _flag = flag;
     _msg = msg;
     _data = data;
@@ -18,17 +18,17 @@ class CustomerListModel {
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
+        _data?.add(CustomerData.fromJson(v));
       });
     }
   }
   int? _flag;
   String? _msg;
-  List<Data>? _data;
+  List<CustomerData>? _data;
 
   int? get flag => _flag;
   String? get msg => _msg;
-  List<Data>? get data => _data;
+  List<CustomerData>? get data => _data;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -43,10 +43,10 @@ class CustomerListModel {
 }
 
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
-class Data {
-  Data({
+CustomerData customerdataFromJson(String str) => CustomerData.fromJson(json.decode(str));
+String custoemrdataToJson(CustomerData data) => json.encode(data.toJson());
+class CustomerData {
+  CustomerData({
       String? customerId, 
       String? customerName, 
       String? customerEmail, 
@@ -69,7 +69,7 @@ class Data {
     _customerStatus = customerStatus;
 }
 
-  Data.fromJson(dynamic json) {
+  CustomerData.fromJson(dynamic json) {
     _customerId = json['customer_id'];
     _customerName = json['customer_name'];
     _customerEmail = json['customer_email'];

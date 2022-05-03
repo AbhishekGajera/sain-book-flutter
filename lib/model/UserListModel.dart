@@ -61,7 +61,7 @@ class UserListModel {
 /// permission : ""
 /// user_status : "1"
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+Data userdataFromJson(String str) => Data.fromJson(json.decode(str));
 String dataToJson(Data data) => json.encode(data.toJson());
 class Data {
   Data({

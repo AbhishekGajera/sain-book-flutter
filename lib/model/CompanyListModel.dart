@@ -60,8 +60,8 @@ class CompanyListModel {
 /// modify_date : "2016-03-22 00:00:00"
 /// company_status : "0"
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
+Data companydataFromJson(String str) => Data.fromJson(json.decode(str));
+String companydataToJson(Data data) => json.encode(data.toJson());
 class Data {
   Data({
       String? companyId, 

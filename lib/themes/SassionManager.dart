@@ -18,12 +18,12 @@ class SassionManager {
 
  static Future<String?> getString({required String key}) async {
    var prefs = await SharedPreferences.getInstance();
-   return prefs.getString(key);
+   return prefs.getString(key) ?? "";
  }
 
   static Future<bool?> getBoolean({required String key}) async {
     var prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key);
+    return prefs.getBool(key) ?? false;
   }
 
 }
@@ -32,4 +32,5 @@ class SassionConst {
   static String sample = "sample";
   static String islogin = "islogin";
   static String loginUserData = "loginUserData";
+  static String userid = "userid";
 }

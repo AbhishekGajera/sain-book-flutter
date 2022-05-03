@@ -24,4 +24,9 @@ class endPoint {
   static String websitelist = "websitelist";
   static String courierlist = "courierlist";
   static String companylist = "companylist";
+  static String bill_number = "new_billno";
+  static String addnew_bill = "addnew_bill";
+  static String get_barcode = "get_barcode";
+  static String get_bill = "get_bill";
+  static String productlist = "productlist";
 }

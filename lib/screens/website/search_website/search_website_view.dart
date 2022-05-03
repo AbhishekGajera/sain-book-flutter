@@ -38,25 +38,6 @@ class Search_websitePage extends StatelessWidget {
 
 
 
-  commenButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 45,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.redAccent.shade700,
-        ),
-        onPressed: () {
-          controller.performLoginClick(context);
-        },
-        child: const Text(
-          "Save",
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
-    ).marginOnly(left: 20, right: 20, top: 10, bottom: 20);
-  }
-
   status() {
     return Obx(() {
       return Container(
@@ -85,6 +66,26 @@ class Search_websitePage extends StatelessWidget {
             .marginOnly(left: 10, right: 10),
       ).marginOnly(left: 20, right: 20, top: 10);
     });
+  }
+
+
+  commenButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 45,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.redAccent.shade700,
+        ),
+        onPressed: () {
+          controller.performLoginClick(context);
+        },
+        child: const Text(
+          "Save",
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    ).marginOnly(left: 20, right: 20, top: 10, bottom: 20);
   }
 
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sain_book_project/model/CompanyListModel.dart';
 import 'package:sain_book_project/themes/mythemes.dart';
 
 import 'add_company_logic.dart';
@@ -9,6 +10,28 @@ class AddCompanyPage extends StatelessWidget {
   final state = Get.find<AddCompanyLogic>().state;
 
   late BuildContext context;
+
+  AddCompanyPage({Data? company}) {
+    if(company!=null){
+      controller.company_name.text = company.companyName!;
+      controller.company_code.text = company.code!;
+      controller.company_email.text = company.companyEmail!;
+      controller.company_mobile.text=company.companyMobile!;
+      controller.company_website.text =company.companyWebsite!;
+      controller.company_address.text =company.companyAddress!;
+      controller.companyStatusValue = int.parse(company.companyStatus.toString());
+      controller.status_value.value = company.companyStatus.toString()=="1"?"Enable":"Disable";
+    }else{
+      controller.company_name.text = "";
+      controller.company_code.text = "";
+      controller.company_email.text = "";
+      controller.company_mobile.text="";
+      controller.company_website.text ="";
+      controller.company_address.text ="";
+      controller.companyStatusValue =-1;
+      controller.status_value.value="Select Status";
+    }
+  }
   @override
   Widget build(BuildContext context) {
     this.context =context;
@@ -120,7 +143,7 @@ class AddCompanyPage extends StatelessWidget {
             value: controller.status_value.value,
             icon: const Icon(Icons.keyboard_arrow_down),
             onChanged: (newValue) {
-              controller.status_value.value = newValue.toString();
+              controller.setStatusValue(newValue.toString());
             },
             items: controller.status_list.map((value) {
               return DropdownMenuItem(

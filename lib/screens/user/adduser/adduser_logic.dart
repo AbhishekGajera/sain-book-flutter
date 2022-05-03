@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sain_book_project/network/DioServices.dart';
 import 'package:sain_book_project/widgets/LoadingDiaog.dart';
+
+import '../../../themes/SassionManager.dart';
+import '../../../widgets/widgets.dart';
 
 class AdduserLogic extends GetxController {
   DioService dio = DioService();
@@ -48,12 +52,6 @@ class AdduserLogic extends GetxController {
   var kadleefashion = false.obs;
 
   final ImagePicker picker = ImagePicker();
-
-  Future<void> performImageSelect() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    print("oooooooooooooo");
-    print(image!.path.toString());
-  }
 
   var genderint = 0;
 
@@ -117,31 +115,50 @@ class AdduserLogic extends GetxController {
 
   void performLoginClick(BuildContext context) {
     print(company_list.toString());
-    if (userstatusint == 0) return;
-    if (usertypeint == 0) return;
-    if (genderint == 0) return;
 
-    LoadingDialog(context).startLoading();
-    dio.saveUser(
-            firstname: firstname.text.toString(),
-            lastname: lastname.text.toString(),
-            user_email: email.text.toString(),
-            password: password.text.toString(),
-            repassword: repassword.text.toString(),
-            mobile_no: mobilenumber.text.toString(),
-            gender: genderint.toString(),
-            user_type_id: usertypeint.toString(),
-            company_id: company_list.toString(),
-            default_status: "1",
-            user_status: userstatusint.toString(),
-            image: File(""),
-            user_id: "1")
-        .then((it) {
-      if (it != null) {
-        LoadingDialog(context).stopLoading();
-      } else {
-        LoadingDialog(context).stopLoading();
+    SassionManager.getString(key: SassionConst.userid).then(
+      (value) {
+        LoadingDialog(context).startLoading();
+        dio
+            .saveUser(
+                firstname: firstname.text.toString(),
+                lastname: lastname.text.toString(),
+                user_email: email.text.toString(),
+                password: password.text.toString(),
+                repassword: repassword.text.toString(),
+                mobile_no: mobilenumber.text.toString(),
+                gender: genderint == 0 ? "" : genderint.toString(),
+                user_type_id: usertypeint == 0 ? "" : usertypeint.toString(),
+                company_id: company_list.toString(),
+                default_status: "1",
+                user_status: userstatusint == 0 ? "" : userstatusint.toString(),
+                image: imagefile.value.toString(),
+                user_id: value.toString())
+            .then((it) {
+          if (it != null) {
+            LoadingDialog(context).stopLoading();
+            Widgets.showSnackbar(
+              context,
+              it.msg.toString(),
+              Colors.green,
+            );
+          } else {
+            LoadingDialog(context).stopLoading();
+          }
+        }).catchError((onError) {
+          LoadingDialog(context).stopLoading();
+        });
       }
-    });
+    );
+  }
+
+  var imagefile = "".obs;
+
+  Future<void> performImageSelect() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    print("---------------------------------------------------->");
+    print(image!.path.toString());
+    File(image.path);
+    imagefile.value = image.path;
   }
 }

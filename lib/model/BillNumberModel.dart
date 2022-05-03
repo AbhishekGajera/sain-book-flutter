@@ -1,7 +1,4 @@
 import 'dart:convert';
-/// flag : 1
-/// msg : "billno."
-/// data : 21668
 
 BillNumberModel billNumberModelFromJson(String str) => BillNumberModel.fromJson(json.decode(str));
 String billNumberModelToJson(BillNumberModel data) => json.encode(data.toJson());

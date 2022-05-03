@@ -25,7 +25,7 @@ class SearchCompanyPage extends StatelessWidget {
   companyName() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
+      controller: controller.company_name,
       decoration: Themes.textFieldDecoration(hint: "Company Name"),
     ).marginOnly(
       left: 20,
@@ -38,7 +38,7 @@ class SearchCompanyPage extends StatelessWidget {
   companyMobile() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
+      controller: controller.company_mobile,
       decoration: Themes.textFieldDecoration(hint: "Company Mobile"),
     ).marginOnly(
       left: 20,
@@ -51,7 +51,7 @@ class SearchCompanyPage extends StatelessWidget {
   companyEmail() {
     return TextField(
       style: Themes.textFieldTextStyle,
-      controller: controller.couriername,
+      controller: controller.company_email,
       decoration: Themes.textFieldDecoration(hint: "Company Email"),
     ).marginOnly(
       left: 20,
@@ -77,7 +77,8 @@ class SearchCompanyPage extends StatelessWidget {
             value: controller.status_value.value,
             icon: const Icon(Icons.keyboard_arrow_down),
             onChanged: (newValue) {
-              controller.status_value.value = newValue.toString();
+
+              controller.setStatusValue(newValue.toString());
             },
             items: controller.status_list.map((value) {
               return DropdownMenuItem(

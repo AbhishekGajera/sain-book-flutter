@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+import '../../../model/UserListModel.dart';
 import '../../../other/images.dart';
 import '../../../themes/mythemes.dart';
 import 'adduser_logic.dart';
@@ -9,6 +13,25 @@ import 'adduser_logic.dart';
 class AdduserPage extends StatelessWidget {
   final controller = Get.put(AdduserLogic());
   late BuildContext context;
+
+  AdduserPage({Data? data}){
+    if(data!=null){
+      controller.firstname.text = data.firstname.toString();
+      controller.lastname.text = data.lastname.toString();
+      controller.email.text = data.userEmail.toString();
+      controller.mobilenumber.text = data.mobileNo.toString();
+      controller.genderValue.value = data.gender=="1"?"Male":"Female";
+      controller.genderint= int.parse(data.gender.toString());
+      controller.userRoleValue.value =  controller.userroleList[int.parse(data.userTypeId.toString())] ;
+      controller.usertypeint = int.parse(data.userTypeId.toString());
+      controller.userstatusint = int.parse(data.userStatus.toString());
+      controller.statuDropdownValue.value = controller.userstatus[int.parse(data.userStatus.toString())];
+    }else{
+
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +50,41 @@ class AdduserPage extends StatelessWidget {
         status(),
         company(),
         commenButton()
+      ],
+    );
+  }
+
+  // Image.file(File(controller.imagefile.value.toString()))
+  profileImage() {
+    return Column(
+      children: [
+        Obx(
+          () {
+            return controller.imagefile.value.isEmpty
+                ? Center(
+                    child: Center(
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundImage: AssetImage(sainbooktransparent),
+                      ),
+                    ),
+                  )
+                : new CircleAvatar(
+                    radius: 60,
+                    backgroundImage: new FileImage(
+                        File(controller.imagefile.value.toString())),
+                  );
+          },
+        ),
+        IconButton(
+          onPressed: () {
+            controller.performImageSelect();
+          },
+          icon: Icon(
+            Icons.camera_alt_outlined,
+            size: 25,
+          ),
+        )
       ],
     );
   }
@@ -206,10 +264,9 @@ class AdduserPage extends StatelessWidget {
               Checkbox(
                 value: controller.khantil.value,
                 onChanged: (value) {
-                  controller.selectOneCompany(value!,1);
+                  controller.selectOneCompany(value!, 1);
                   controller.khantil.value =
                       controller.khantil.value ? false : true;
-
                 },
               ),
               Text("KHANTIL")
@@ -220,7 +277,7 @@ class AdduserPage extends StatelessWidget {
               Checkbox(
                 value: controller.vandshop.value,
                 onChanged: (value) {
-                  controller.selectOneCompany(value!,2);
+                  controller.selectOneCompany(value!, 2);
                   controller.vandshop.value =
                       controller.vandshop.value ? false : true;
                 },
@@ -233,10 +290,9 @@ class AdduserPage extends StatelessWidget {
               Checkbox(
                 value: controller.kadleefashion.value,
                 onChanged: (value) {
-                  controller.selectOneCompany(value!,3);
+                  controller.selectOneCompany(value!, 3);
                   controller.kadleefashion.value =
                       controller.kadleefashion.value ? false : true;
-
                 },
               ),
               Text("KADLEEFASHION")
@@ -298,29 +354,5 @@ class AdduserPage extends StatelessWidget {
         ),
       ),
     ).marginOnly(left: 20, right: 20, top: 10, bottom: 20);
-  }
-
-  profileImage() {
-    return Column(
-      children: [
-        Center(
-          child: Center(
-            child: CircleAvatar(
-              radius: 60, // Image radius
-              backgroundImage: AssetImage(sainbooktransparent),
-            ),
-          ),
-        ),
-        IconButton(
-          onPressed: () {
-            controller.performImageSelect();
-          },
-          icon: Icon(
-            Icons.camera_alt_outlined,
-            size: 25,
-          ),
-        )
-      ],
-    );
   }
 }

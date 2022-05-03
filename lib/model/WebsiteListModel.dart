@@ -42,8 +42,8 @@ class WebsiteListModel {
 
 }
 
-Data dataFromJson(String str) => Data.fromJson(json.decode(str));
-String dataToJson(Data data) => json.encode(data.toJson());
+Data websitedataFromJson(String str) => Data.fromJson(json.decode(str));
+String websitedataToJson(Data data) => json.encode(data.toJson());
 class Data {
   Data({
       String? websiteId, 

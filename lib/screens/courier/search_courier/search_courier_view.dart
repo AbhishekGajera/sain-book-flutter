@@ -51,7 +51,7 @@ class SearchCourierPage extends StatelessWidget {
                 value: controller.code_value.value,
                 icon: const Icon(Icons.keyboard_arrow_down),
                 onChanged: (newValue) {
-                  controller.code_value.value = newValue.toString();
+                  controller.setCodStatus(newValue.toString());
                 },
                 items: controller.codStatus.map((value) {
                   return DropdownMenuItem(
@@ -81,7 +81,8 @@ class SearchCourierPage extends StatelessWidget {
                 value: controller.statusValue.value,
                 icon: const Icon(Icons.keyboard_arrow_down),
                 onChanged: (newValue) {
-                  controller.statusValue.value = newValue.toString();
+                  controller.setCourierStatus(newValue.toString());
+
                 },
                 items: controller.status.map((value) {
                   return DropdownMenuItem(

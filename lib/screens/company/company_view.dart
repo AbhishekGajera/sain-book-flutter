@@ -9,7 +9,7 @@ import 'company_logic.dart';
 
 class CompanyPage extends StatelessWidget {
   final logic = Get.put(CompanyLogic());
-  final state = Get.find<CompanyLogic>().state;
+
 
   @override
   Widget build(BuildContext context) {
